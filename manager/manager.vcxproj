@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{151f8877-5024-4eb7-b3f3-873817a54d8a}</ProjectGuid>
+    <RootNamespace>manager</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <!-- Executables of every project go to bin\debug|release next to processes.slnx, so manager finds fork.exe -->
+    <OutDir>$(MSBuildProjectDirectory)\..\bin\$(Configuration.ToLower())\</OutDir>
+    <IntDir>$(MSBuildProjectDirectory)\bin\obj\$(Configuration.ToLower())\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <!-- fork's headers: shares the protocol and handle helpers with fork.exe -->
+      <AdditionalIncludeDirectories>$(ProjectDir)src\header;$(ProjectDir)..\fork\src\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <!-- fork's headers: shares the protocol and handle helpers with fork.exe -->
+      <AdditionalIncludeDirectories>$(ProjectDir)src\header;$(ProjectDir)..\fork\src\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\fork\src\source\Protocol.cpp" />
+    <ClCompile Include="src\source\App.cpp" />
+    <ClCompile Include="src\source\Canvas.cpp" />
+    <ClCompile Include="src\source\Console.cpp" />
+    <ClCompile Include="src\source\ForkRoot.cpp" />
+    <ClCompile Include="src\source\main.cpp" />
+    <ClCompile Include="src\source\Layout.cpp" />
+    <ClCompile Include="src\source\ProcessModel.cpp" />
+    <ClCompile Include="src\source\Renderer.cpp" />
+    <ClCompile Include="src\source\Watcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\fork\src\header\Protocol.h" />
+    <ClInclude Include="..\fork\src\header\UniqueHandle.h" />
+    <ClInclude Include="src\header\App.h" />
+    <ClInclude Include="src\header\Canvas.h" />
+    <ClInclude Include="src\header\Console.h" />
+    <ClInclude Include="src\header\ForkRoot.h" />
+    <ClInclude Include="src\header\Layout.h" />
+    <ClInclude Include="src\header\ProcessModel.h" />
+    <ClInclude Include="src\header\Renderer.h" />
+    <ClInclude Include="src\header\Watcher.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- manager runs fork.exe, so build it first -->
+    <ProjectReference Include="..\fork\fork.vcxproj">
+      <Project>{92f6749f-89db-4edb-8144-0c2c79f3df40}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

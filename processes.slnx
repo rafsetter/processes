@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="fork/fork.vcxproj" Id="92f6749f-89db-4edb-8144-0c2c79f3df40" />
+  <Project Path="manager\manager.vcxproj" Id="151f8877-5024-4eb7-b3f3-873817a54d8a" />
+</Solution>
